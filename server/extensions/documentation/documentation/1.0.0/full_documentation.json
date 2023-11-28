@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/06/2023 2:23:29 AM"
+    "x-generation-date": "11/28/2023 6:23:26 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -12288,6 +12288,9 @@
                 "last_logged_in": {
                   "type": "string"
                 },
+                "Programs": {
+                  "type": "object"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -13208,6 +13211,9 @@
               "last_logged_in": {
                 "type": "string"
               },
+              "Programs": {
+                "type": "object"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -13685,6 +13691,9 @@
                 "last_logged_in": {
                   "type": "string"
                 },
+                "Programs": {
+                  "type": "object"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -14074,6 +14083,28 @@
           "last_logged_in": {
             "type": "string",
             "format": "date-time"
+          },
+          "Programs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "date_created": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "name",
+                "url",
+                "date_created"
+              ]
+            }
           }
         }
       },
@@ -14104,6 +14135,28 @@
           "last_logged_in": {
             "type": "string",
             "format": "date-time"
+          },
+          "Programs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "date_created": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "name",
+                "url",
+                "date_created"
+              ]
+            }
           },
           "created_by": {
             "type": "string"

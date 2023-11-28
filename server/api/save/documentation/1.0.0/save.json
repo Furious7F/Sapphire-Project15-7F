@@ -675,6 +675,9 @@
               "last_logged_in": {
                 "type": "string"
               },
+              "Programs": {
+                "type": "object"
+              },
               "created_by": {
                 "type": "string"
               },

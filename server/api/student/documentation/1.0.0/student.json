@@ -784,6 +784,24 @@
           "last_logged_in": {
             "type": "string",
             "format": "date-time"
+          },
+          "Programs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "url":{
+                  "type": "string"
+                },
+                "date_created": {
+                  "type": "integer"
+                }
+              },
+              "required": ["name", "url", "date_created"]
+            }
           }
         }
       },
@@ -814,6 +832,24 @@
           "last_logged_in": {
             "type": "string",
             "format": "date-time"
+          },
+          "Programs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "url":{
+                  "type": "string"
+                },
+                "date_created": {
+                  "type": "integer"
+                }
+              },
+              "required": ["name", "url", "date_created"]
+            }
           },
           "created_by": {
             "type": "string"
