@@ -57,7 +57,7 @@ export default function Dashboard(){
                     <div>Dashboard</div>
                 </div>
                 <h1 id="studentNameHeader">Welcome {typeof currentStudent === 'string' ? JSON.stringify(currentStudent).slice(1, -1) : ''} !</h1>
-                <h2 id="lessonModuleHeader">Current Lesson Module</h2>
+                <h2 id="lessonModuleHeader">Lesson Module</h2>
                 <div id="containerDashboard">
                     <div className="dashboard-box" onClick={handleLessonButton}>
                         <div id="lessonName">
