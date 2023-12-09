@@ -155,6 +155,7 @@ makeRequest({
   error: 'Student info could not be retrieved.',
 });
 
+
 export const postJoin = async (code, ids) =>
   makeRequest({
     method: POST,
