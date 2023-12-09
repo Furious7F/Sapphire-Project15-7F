@@ -155,6 +155,13 @@ makeRequest({
   error: 'Student info could not be retrieved.',
 });
 
+export const getProjects = async () =>
+makeRequest({
+  method: GET,
+  path: `${server}/projects`,
+  auth: true,
+  error: 'Project info could not be retrieved.',
+});
 
 export const postJoin = async (code, ids) =>
   makeRequest({
