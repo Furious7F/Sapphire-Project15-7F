@@ -16,7 +16,7 @@ export default function Dashboard(){
             const res = await getStudentName();
             if (res.data) {
             if (res.data.students) {
-                console.log(res.data);
+                console.log(JSON.stringify(res.data));
                 setCurrentStudent(res.data.students[0].name);
             }
             } else {
@@ -32,7 +32,7 @@ export default function Dashboard(){
         try {
             const res = await getStudentClassroom();
             if (res.data) {
-                console.log(JSON.stringify(res.data.lesson_module.name));
+                //console.log(JSON.stringify(res.data.lesson_module.name));
                 if (res.data.lesson_module)
                 {
                     setLessonModule(res.data.lesson_module);
@@ -50,24 +50,27 @@ export default function Dashboard(){
       };
 
     return(
-        <div className='container nav-padding'>
+        <div id="totalPage" className='container nav-padding'>
             <NavBar />
             <div id='activity-container'>
                 <div id='header'>
                     <div>Dashboard</div>
                 </div>
                 <h1 id="studentNameHeader">Welcome {typeof currentStudent === 'string' ? JSON.stringify(currentStudent).slice(1, -1) : ''} !</h1>
-                <h2 id="lessonModuleHeader">Lesson Module</h2>
-                <div id="containerDashboard">
-                    <div className="dashboard-box" onClick={handleLessonButton}>
-                        <div id="lessonName">
-                        {typeof learningStandard.name === 'string' ? JSON.stringify(learningStandard.name).slice(1, -1) : ''}
-                        </div>
-                        <div>
-                        {typeof learningStandard.expectations === 'string' ? JSON.stringify(learningStandard.expectations).slice(1, -1) : ''}
+                <div>
+                    <h2 id="lessonModuleHeader">My Lesson Modules</h2>
+                    <div id="containerDashboard">
+                        <div className="dashboard-box" onClick={handleLessonButton}>
+                            <div id="lessonName">
+                            {typeof learningStandard.name === 'string' ? JSON.stringify(learningStandard.name).slice(1, -1) : ''}
+                            </div>
+                            <div id="lessonDisc">
+                            {typeof learningStandard.expectations === 'string' ? JSON.stringify(learningStandard.expectations).slice(1, -1) : ''}
+                            </div>
                         </div>
                     </div>
                 </div>
+                <h2 id="programHeader">My Projects</h2>
             </div>
         </div>
         );
