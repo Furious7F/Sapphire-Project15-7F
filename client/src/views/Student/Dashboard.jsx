@@ -51,10 +51,8 @@ export default function Dashboard(){
         try {
             const res = await getProjects();
             if (res.data) {
-                //console.log(JSON.stringify(res.data));
-                if (res.data) {
-                    setProjects(res.data);
-                }
+                setProjects(res.data);
+                console.log(typeof projects);
             } else {
             message.error(res.err);
             }
