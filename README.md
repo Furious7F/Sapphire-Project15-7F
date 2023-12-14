@@ -74,19 +74,29 @@ Forgot password page with a form for the email
 
 First, clone the github repository with ‘git clone https://github.com/UFWebApps2-0/sapphire-code-sparks’.
 
+![Alt text](/images/1i.png?raw=true)
+
 Then, navigate to the created repository, run ‘npm install’, then navigate to ‘/client’, and run ‘npm install’ again and then ‘yarn start’. This sets up the front end of the website.
 npm install
 cd client
 npm install
 yarn start
 
+![Alt text](/images/2i.png?raw=true)
+
 Then, navigate back to ‘/’ and run ‘docker compose up’. This sets up the backend of the website.
 cd ..
 docker compose up
 
+![Alt text](/images/3i.png?raw=true)
+
 Wait until this launch confirmation.
 
+![Alt text](/images/4i.png?raw=true)
+
 Now, go to your web browser and navigate to ‘http://localhost:3000/’.
+
+![Alt text](/images/5i.png?raw=true)
 
 Congratulations, you are now running the project locally and can experiment with the different features!
 
@@ -98,7 +108,11 @@ Login with the Strapi Admin account
 
 In the Content-Types Builder you can create fields of different types of objects
 
+![Alt text](/images/6i.png?raw=true)
+
 Upon adding anything to the backend, you're locally hosted backend will have these changes
+
+![Alt text](/images/7i.png?raw=true)
 
 ## Dump Files
 Dump files are used by docker to recreate the database from scratch. They, and the script that uses them, are located in ``/scripts/``. The dump file that controls the content of strapi is **development_db.dump**.
