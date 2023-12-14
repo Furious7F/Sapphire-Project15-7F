@@ -21,15 +21,30 @@ Initial hamburger menu converted to buttons for easier navigation for children
 Routing and linking to different pages
 Verification to make sure the user is a student
 
+![Alt text](/images/2_routing.png?raw=true)
+![Alt text](/images/3_routing.png?raw=true)
+![Alt text](/images/4_routing.png?raw=true)
+![Alt text](/images/5_routing.png?raw=true)
+
 ### Student Dashboard
 Display student name retrieved from backend
 Display lessons module with a lessons button that navigates to lessons
 Display student projects
+
+![Alt text](/images/6_dashboard.png?raw=true)
+
 Ability to remove projects
+
+![Alt text](/images/remove.png?raw=true)
 
 ### Lessons
 Buttons that navigate to student assigned lessons
+
+![Alt text](/images/7_lessons.PNG?raw=true)
+
 Upon hover button is highlighted
+
+![Alt text](/images/8_lessonbuttons.png?raw=true)
 
 ### Classroom
 Display current grades for student
@@ -37,10 +52,23 @@ Display a calander with an agenda of upcoming and previous events
 Display classmates so students can collaborate 
 Calander interaction
 
+![Alt text](/images/9_classroom.png?raw=true)
+
 ### Parental
 Form login for attatched parental account
+
+![Alt text](/images/10_classroom.png.png?raw=true)
+
 Sign up button that has a page with a form with type verification
+
+![Alt text](/images/11_signup.png?raw=true)
+![Alt text](/images/12_signupregex.png?raw=true)
+![Alt text](/images/12_signupregex2.png?raw=true)
+![Alt text](/images/12_signupregex3.png?raw=true)
+
 Forgot password page with a form for the email
+
+![Alt text](/images/13_forgotpass.png?raw=true)
 
 ## Instructions on how to run project locally
 
