@@ -163,6 +163,17 @@ makeRequest({
   error: 'Project info could not be retrieved.',
 });
 
+
+export const removeProjectFromStudent = async (student, id) =>
+makeRequest({
+  method: PUT,
+  path: `${server}/projects/${id}`,
+  data: student,
+  auth: true,
+  error: 'Student projects could not be updated.',
+});
+
+
 export const postJoin = async (code, ids) =>
   makeRequest({
     method: POST,
