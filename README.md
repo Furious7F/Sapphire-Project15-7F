@@ -57,7 +57,7 @@ Calander interaction
 ### Parental
 Form login for attatched parental account
 
-![Alt text](/images/10_classroom.png.png?raw=true)
+![Alt text](/images/10_classroom.png?raw=true)
 
 Sign up button that has a page with a form with type verification
 
