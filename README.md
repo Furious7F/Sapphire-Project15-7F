@@ -7,136 +7,88 @@ Cloud-based programming interface
 ![Deploy Staging](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Staging/badge.svg)
 ![Deploy Production](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Production/badge.svg)
 
-<br/>
 
-## Application
+# Project 15f
+## Student personal/student account dashboard & parental controls
+Giovanni Perez Colon, Brian Ramirez, Elan Bar-Nur, Yujin Gu, Richard Burke, Tuan Truong
 
-### `client` 
-[client](/client#client) is the frontend of the application. It is powered by [React](https://reactjs.org/) and [Blockly](https://developers.google.com/blockly).
+## Features implemented
+### Hamburger menu with navigation buttons linking to routing
+Initial hamburger menu converted to buttons for easier navigation for children
+Routing and linking to different pages
+Verification to make sure the user is a student
 
-### `server`
+### Student Dashboard
+Display student name retrieved from backend
+Display lessons module with a lessons button that navigates to lessons
+Display student projects
+Ability to remove projects
 
-[server](/server#server) is the web server and application server. It is powered by [Node](https://nodejs.org/en/) and [Strapi](https://docs-v3.strapi.io/developer-docs/latest/getting-started/introduction.html).
+### Lessons
+Buttons that navigate to student assigned lessons
+Upon hover button is highlighted
 
-### `compile`
+### Classroom
+Display current grades for student
+Display a calander with an agenda of upcoming and previous events
+Display classmates so students can collaborate 
+Calander interaction
 
-  [compile](/compile#compile) is an arduino compiler service. It is an unofficial fork of [Chromeduino](https://github.com/spaceneedle/Chromeduino).
+### Parental
+Form login for attatched parental account
+Sign up button that has a page with a form with type verification
+Forgot password page with a form for the email
 
-<br/>
+## Instructions on how to run project locally
 
-## Environments
+First, clone the github repository with ‘git clone https://github.com/UFWebApps2-0/sapphire-code-sparks’.
 
-> The project is divided into three conceptual environments.
+Then, navigate to the created repository, run ‘npm install’, then navigate to ‘/client’, and run ‘npm install’ again and then ‘yarn start’. This sets up the front end of the website.
+npm install
+cd client
+npm install
+yarn start
 
-### Development
-#### Structure
+Then, navigate back to ‘/’ and run ‘docker compose up’. This sets up the backend of the website.
+cd ..
+docker compose up
 
-The development environment is composed of five servers. The first one is run with the [Create React App](https://create-react-app.dev/docs/getting-started/) dev server. The later four are containerized with docker and run with [docker compose](https://docs.docker.com/compose/).
+Wait until this launch confirmation.
 
-* `casmm-client-dev` - localhost:3000
+Now, go to your web browser and navigate to ‘http://localhost:3000/’.
 
-* `casmm-server-dev` - localhost:1337/admin
+Congratulations, you are now running the project locally and can experiment with the different features!
 
-* `casmm-compile-dev` 
+## How to update database and server conncetions
 
-* `casmm-db-dev` - localhost:5432
+After docker is setup navigate to http://localhost:1337/admin
 
-  > The first time the db is started, the [init_db.sh](/scripts/init_db.sh) script will run and seed the database with an environment specific dump. Read about Postgres initialization scripts [here](https://github.com/docker-library/docs/blob/master/postgres/README.md#initialization-scripts). To see how to create this dump, look [here](https://github.com/DavidMagda/CaSMM_fork_2023/blob/develop/scripts/readme.md).
+Login with the Strapi Admin account
 
-* `casmm-compile_queue-dev`
+In the Content-Types Builder you can create fields of different types of objects
 
-#### Running
+Upon adding anything to the backend, you're locally hosted backend will have these changes
 
-`casmm-client-dev`
+## Dump Files
+Dump files are used by docker to recreate the database from scratch. They, and the script that uses them, are located in ``/scripts/``. The dump file that controls the content of strapi is **development_db.dump**.
 
-1. Follow the [client](/client#setup) setup
-2. Run `yarn start` from `/client`
+### Creating Dump Files
+Creating dump files is down using postgres. When running in the Docker environment, you can open the database in a terminal like so:
+![image](https://github.com/DavidMagda/CaSMM_fork_2023/assets/31215899/30472760-1f70-4007-9017-02ce31b9d8ce)
 
-`casmm-server-dev`, `casmm-compile-dev`, `casmm-db-dev`, and `casmm-compile_queue-dev`
+Once in the terminal, you can use the ```pg_dump``` command to create the dump file. The full syntax for this is: ```pg_dump -U postgres strapi -f development_db.dump```. This creates the dump file in the current directory. You can then find it in one of two ways: through the Docker UI or through your file navigation system.
 
-1. Install [docker](https://docs.docker.com/get-docker/)
+#### Finding the file through the Docker UI
+You can find the file in the 'Files' tab for the database. It's located here:
+![image](https://github.com/DavidMagda/CaSMM_fork_2023/assets/31215899/31321e15-aa5d-4196-8398-79afb64bbf7a)
 
-2. Run `docker compose up` from `/`
+It will be located in the **docker-entrypoint-initdb.d** folder like so:
+![image](https://github.com/DavidMagda/CaSMM_fork_2023/assets/31215899/41f59197-0cdc-4526-8bd2-437b21dae6fc)
 
-   > Grant permission to the **scripts** and **server** directories if you are prompted
-   
+You can then right-click and save the file to your desired directory.
+![image](https://github.com/DavidMagda/CaSMM_fork_2023/assets/31215899/c7d413f5-f197-48a4-b1ec-8c7eb9a803a8)
 
-### Staging
+Replacing the old dump with this new one will allow you to load your strapi into whatever state it was in when the dump was made.
 
-#### Structure
-
-The staging environment is a Heroku app. It is composed of a web dyno, compile dyno, Heroku Postgres add-on, and Heroku Redis add-on.
-
-* `casmm-staging` - [casmm-staging.herokuapp.com](https://casmm-staging.herokuapp.com/)
-  * The web dyno runs `server`
-  * The compile dyno runs `compile`
-
-#### Running
-
-`casmm-staging` is automatically built from the latest commits to branches matching `release/v[0-9].[0-9]`. Heroku runs the container orchestration from there.
-
-### Production
-
-#### Structure
-
-The production environment is a Heroku app. It is composed of a web dyno, compile dyno, Heroku Postgres add-on, and Heroku Redis add-on.
-
-* `casmm` - [www.casmm.org](https://www.casmm.org/)
-  * The web dyno runs `server`
-  * The compile dyno runs `compile`
-
-#### Running
-
-`casmm` is automatically built from the latest commits to `master`. Heroku runs the container orchestration from there.
-
-<br/>
-
-## Maintenance
-
-All three components of the application have their own dependencies managed in their respective `package.json` files. Run `npm outdated` in each folder to see what packages have new releases. Before updating a package (especially new major versions), ensure that there are no breaking changes. Avoid updating all of the packages at once by running `npm update` because it could lead to breaking changes. 
-
-### Strapi
-
-This is by far the largest and most important dependency we have. Staying up to date with its [releases](https://github.com/strapi/strapi/releases) is important for bug/security fixes and new features. When it comes to actually upgrading Strapi make sure to follow the [migration guides](https://docs-v3.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html#v3-guides)!
-
-<br/>
-
-## CI/CD
-
-All of the deployments and releases are handled automatically with [GitHub Actions](https://docs.github.com/en/actions). The workflows implement custom [Actions](https://github.com/STEM-C/CaSMM/actions) that live in the [auto](https://github.com/STEM-C/auto) repo.
-
-<br/>
-
-## Contributing
-
-### Git Flow 
-
-> We will follow this git flow for the most part — instead of individual release branches, we will have one to streamline staging deployment 
-
-![Git Flow](https://nvie.com/img/git-model@2x.png)
-
-### Branches
-
-#### Protected
-
-> Locked for direct commits — all commits must be made from a non-protected branch and submitted via a pull request with one approving review
-
-- **master** - Production application
-
-#### Non-protected
-
-> Commits can be made directly to the branch
-
-- **release** - Staging application
-- **develop** - Working version of the application
-- **feature/<`scaffold`>-<`feature-name`>** - Based off of develop
-  - ex. **feature/cms-strapi**
-- **hotfix/<`scaffold`>-<`fix-name`>** - Based off of master
-  - ex. **hotfix/client-cors**
-
-### Pull Requests
-
-Before submitting a pull request, rebase the feature branch into the target branch to resolve any merge conflicts.
-
-- PRs to **master** should squash and merge
-- PRs to all other branches should create a merge commit
+## Issues
+If this does not work, you can alternatively try using the command ```pg_dumpall -U postgres -f dumpall.dump```. This will dump all of the databases and you can then manually remove the ones that you didn't mean to grab.
