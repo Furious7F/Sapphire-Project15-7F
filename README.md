@@ -15,6 +15,9 @@ Giovanni Perez Colon, Brian Ramirez, Elan Bar-Nur, Yujin Gu, Richard Burke, Tuan
 ## Features implemented
 ### Hamburger menu with navigation buttons linking to routing
 Initial hamburger menu converted to buttons for easier navigation for children
+
+![Alt text](\images\1_hamburger menu.pngraw=true "Optional Title")
+
 Routing and linking to different pages
 Verification to make sure the user is a student
 
