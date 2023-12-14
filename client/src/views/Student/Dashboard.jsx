@@ -2,22 +2,28 @@ import { message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
-import { getStudentName, getStudentClassroom, getProjects } from '../../Utils/requests';
+import { getStudentName, getStudentClassroom, getProjects, removeProjectFromStudent } from '../../Utils/requests';
 import './Student.less';
 
 export default function Dashboard(){
-    const [learningStandard, setLessonModule] = useState({});
-    const [currentStudent, setCurrentStudent] = useState({});
-    const [projects, setProjects] = useState({});
+    const [learningStandard, setLessonModule] = useState([]);
+    const [currentStudent, setCurrentStudent] = useState([]);
+    const [currentStudentData, setCurrentStudentData] = useState([]);
+    const [currentProj, setCurrentProj] = useState({});
+    const [students, setProjStudents] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [projects, setProjects] = useState([]);
+    const [projectButtons, setProjectButtons] = useState([]);
     const navigate = useNavigate();
 
+    //GETs currently logged in student name
     useEffect(() => {
         const fetchData = async () => {
         try {
             const res = await getStudentName();
             if (res.data) {
             if (res.data.students) {
-                //console.log(JSON.stringify(res.data.students[0]));
+                setCurrentStudentData(res.data.students[0]);
                 setCurrentStudent(res.data.students[0].name);
             }
             } else {
@@ -28,12 +34,12 @@ export default function Dashboard(){
         fetchData();
     }, []);
 
+    //GETs student classroom
     useEffect(() => {
         const fetchData = async () => {
         try {
             const res = await getStudentClassroom();
             if (res.data) {
-                //console.log(JSON.stringify(res.data.lesson_module.name));
                 if (res.data.lesson_module)
                 {
                     setLessonModule(res.data.lesson_module);
@@ -46,15 +52,13 @@ export default function Dashboard(){
         fetchData();
     }, []);
 
+    //GETs all the projects
     useEffect(() => {
         const fetchData = async () => {
         try {
             const res = await getProjects();
             if (res.data) {
-                //console.log(JSON.stringify(res.data));
-                if (res.data) {
-                    setProjects(res.data);
-                }
+                setProjects(res.data);
             } else {
             message.error(res.err);
             }
@@ -63,51 +67,66 @@ export default function Dashboard(){
         fetchData();
     }, []);
 
-    /*
-    const projectList = [];
-    const projectTemp = projects;
-    for (let i = 0; i < projectTemp.length; i++) {
-        console.log(i);
-        //console.log(projects[i]);
-        console.log(projects[i].student != null);
-        console.log(typeof projects[i].student);
-        if (projects[i].student != null)
-        {
-            /*
-            for (let j = 0; i < len; j++) {
-                //console.log(JSON.stringify(len));
-                if (projects[i].student[j] === currentStudent)
-                {
-                    projectList.push(projects[i]);
-                    //console.log(JSON.stringify(projects[i].student[j]));
-                    break;
-                }
-            } */
-
-    const projectList = projects;
-    const projectButtons = document.getElementById('projList');
-    for (let i = 0; i < projectList.length; i++) {
-        const item = projects[i].Name;
-        const btn = document.createElement('button');
-        btn.id = item.replace(' ', '');
-        //btn.innerText = item;
-        if (projectButtons.childElementCount < projectList.length-1)
-        {
-            var abbv = extractUppercaseLetters(item);
-            btn.innerHTML = `<div id='BE'><div id='buttonElement1'>${abbv}</div><div id='buttonElement2'>${item}</div></div>`;
-            btn.addEventListener("click", function() {
-                window.location.href = projects[i].URL;
-            })
-            if (projects[i].student != null)
-            {
-                if (projects[i].student.name === currentStudent)
-                {
-                    projectButtons.appendChild(btn);
-                }
-            }
+    const handleRemoveProj = (item) => {
+        setCurrentProj(item);
+        setShowModal(true);
+        console.log("REMOVE: " + currentProj.name + " modal: " + showModal);
+        refreshProjects();
+    };
+    const handleCloseModal = (confirmed) => {
+        setShowModal(false);
+        if (confirmed) {
+            let projectList = projects;
+            setProjects(projectList => projectList.filter(project => project.id !== currentProj.id));
         }
-    }
+        console.log("modal: " + showModal);
+        refreshProjects();
+    };
 
+    const handleRefresh = () => {
+        refreshProjects();
+    };
+
+    //Refreshes the projects
+    
+    function refreshProjects() {
+        const newButtons = projects
+            .filter(project => project.student !== null && project.student.name === currentStudent)
+            .map((project, index) => {
+                const item = project.Name;
+                const abbv = extractUppercaseLetters(item);
+                
+                const handleButtonClick = () => {
+                    window.location.href = project.URL;
+                };
+    
+                const handleRemoveButtonClick = (event) => {
+                    event.stopPropagation();
+                    console.log('Remove button clicked for:', item);
+                    handleRemoveProj(item);
+                    setCurrentProj(project);
+                };
+    
+                return (
+                    <div key={index} onClick={handleButtonClick}>
+                        <div id='BE'>
+                            <div>
+                                <button class='removeButton' id='removeButton' onClick={handleRemoveButtonClick}>
+                                    <img src="../../src/assets/bin.png" width="24" height="24" />
+                                </button>
+                            </div>
+                            <div id='buttonElement1'>{abbv}</div>
+                            <div id='buttonElement2'>{item}</div>
+                        </div>
+                    </div>
+                );
+            });
+    
+        setProjectButtons(newButtons);
+    }
+    
+
+    //EZ Abbreviation
     function extractUppercaseLetters(inputString) {
         let uppercaseLetters = '';
         for (let i = 0; i < inputString.length; i++) {
@@ -121,11 +140,20 @@ export default function Dashboard(){
     
     const handleLessonButton = () => {
         navigate('/studentLessons')
-      };
-    
+    };
 
     return(
         <div id="totalPage" className='container nav-padding'>
+            {showModal &&
+            <div id="myModal" className="modal">
+                <div className="modal-content">
+                    <p>Are you sure you want to remove {currentProj.name}?</p>
+                    <div id="projBut">
+                        <button id="yesButton" onClick={() => handleCloseModal(true)}>Yes</button>
+                        <button id="noButton" onClick={() => handleCloseModal(false)}>No</button>
+                    </div>
+                </div>
+            </div>}
             <NavBar />
             <div id='activity-container'>
                 <div id='header'>
@@ -146,7 +174,12 @@ export default function Dashboard(){
                     </div>
                 </div>
                 <h2 id="programHeader">My Projects</h2>
-                <div id="projList"></div>
+                <button id="refButton" onClick={() => handleCloseModal(true)}>Refresh</button>
+                <div id='projList'>
+                    {projectButtons.map((button, index) => (
+                        <div key={index} id='newButton'>{button}</div>
+                    ))}
+                </div>
             </div>
         </div>
         );
